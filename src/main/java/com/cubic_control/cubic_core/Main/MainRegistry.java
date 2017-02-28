@@ -1,6 +1,8 @@
 package com.cubic_control.cubic_core.Main;
 
+import com.cubic_control.cubic_core.Events.MEventHandler;
 import com.cubic_control.cubic_core.Lib.RefStrings;
+import com.cubic_control.cubic_core.Utils.ModUtils;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
@@ -23,14 +25,17 @@ public class MainRegistry {
 	
 	@EventHandler
 	public static void Preload(FMLPreInitializationEvent PreEvent){
+		ModUtils utils = new ModUtils();
 		proxy.registerRenderInfo();
 	}
 	@EventHandler
 	public static void load(FMLInitializationEvent event){
 		FMLCommonHandler.instance().bus().register(instance);
+		MEventHandler.registerEvents();
 		
 		MainRegistry.versionChecker = new VersionChecker(RefStrings.VERSION,
-				"https://github.com/cubic-control");
+				"https://raw.githubusercontent.com/cubic-control/CubicCore/master/src/main/resources/version_file.txt",
+				RefStrings.NAME);
 		Thread versionCheckThread = new Thread(MainRegistry.versionChecker, "Version Check");
 		versionCheckThread.start();
 	}

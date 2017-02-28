@@ -13,14 +13,11 @@ import cpw.mods.fml.common.gameevent.TickEvent.PlayerTickEvent;
 
 public class MEventUpdateChecker {
 	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
-	public void onEvent(PlayerTickEvent event)
-	{
-	  
-	    if (!MainRegistry.haveWarnedVersionOutOfDate && event.player.worldObj.isRemote 
-	          && !MainRegistry.versionChecker.isLatestVersion())
-	    {
+	public void onPlayerTickEvent(PlayerTickEvent event) {
+	    if(!MainRegistry.haveWarnedVersionOutOfDate && event.player.worldObj.isRemote 
+	          && !MainRegistry.versionChecker.isLatestVersion()) {
 	        ClickEvent versionCheckChatClickEvent = new ClickEvent(ClickEvent.Action.OPEN_URL, 
-	              "");
+	              "https://github.com/cubic-control/CubicCore");
 	        ChatStyle clickableChatStyle = new ChatStyle().setChatClickEvent(versionCheckChatClickEvent);
 	        ChatComponentText versionWarningChatComponent = 
 	              new ChatComponentText(RefStrings.NAME + " is not the latest version! Click here to update.");
@@ -28,7 +25,6 @@ public class MEventUpdateChecker {
 	        event.player.addChatMessage(versionWarningChatComponent);
 	        MainRegistry.haveWarnedVersionOutOfDate = true;
 	    }
-	  
 	}
 
 }

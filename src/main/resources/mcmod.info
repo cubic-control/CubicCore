@@ -1,6 +1,6 @@
 [
 {
-  "modid": "cc",
+  "modid": "cubic_core",
   "name": "CubicCore",
   "description": "Required library for cubic_control's mods.",
   "version": "BETA",

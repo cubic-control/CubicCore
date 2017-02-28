@@ -7,47 +7,11 @@ import java.net.URL;
 
 import org.apache.commons.io.IOUtils;
 
-public class VersionChecker implements Runnable{
-    private static boolean isLatestVersion = false;
-    private static String latestVersion = "";
-    private static String currentVersion = "";
-    private static String url = "";
+import com.cubic_control.cubic_core.Bases.VersionCheckerBase;
+
+public class VersionChecker extends VersionCheckerBase{
     
-    public VersionChecker(String version, String string){
-    	this.currentVersion = version;
-    	this.url = string;
-    }
-    
-    @Override
-    public void run() {
-        InputStream in = null;
-        try {
-            in = new URL(url).openStream();
-        }catch(MalformedURLException e) {
-            e.printStackTrace();
-        }catch(IOException e) {
-            e.printStackTrace();
-        }
-        
-        try {
-            latestVersion = IOUtils.readLines(in).get(0);
-        }catch(IOException e) {
-            e.printStackTrace();
-        }
-        
-        finally {
-            IOUtils.closeQuietly(in);
-        }
-        System.out.println("Latest mod version = "+latestVersion);
-        isLatestVersion = currentVersion.equals(latestVersion);
-        System.out.println("Are you running latest version = "+isLatestVersion);
-    }
-    
-    public boolean isLatestVersion() {
-     return isLatestVersion;
-    }
-    
-    public String getLatestVersion() {
-     return latestVersion;
+    public VersionChecker(String version, String string, String modname){
+    	super(version, string, modname);
     }
 }
