@@ -3,7 +3,7 @@
   "modid": "cubic_core",
   "name": "CubicCore",
   "description": "Required library for cubic_control's mods.",
-  "version": "BETA",
+  "version": "RELEASE",
   "mcversion": "1.7.x",
   "url": "",
   "updateUrl": "",

@@ -7,11 +7,42 @@ import java.net.URL;
 
 import org.apache.commons.io.IOUtils;
 
-import com.cubic_control.cubic_core.Bases.VersionCheckerBase;
+import com.cubic_control.cubic_core.Lib.RefStrings;
 
-public class VersionChecker extends VersionCheckerBase{
+public class VersionChecker implements Runnable{
+    private static boolean isLatestVersion = false;
+    private static String latestVersion = "";
     
-    public VersionChecker(String version, String string, String modname){
-    	super(version, string, modname);
+    @Override
+    public void run() {
+        InputStream in = null;
+        try{
+            in = new URL("https://raw.githubusercontent.com/cubic-control/CubicCore/master/src/main/resources/version_file.txt").openStream();
+        }catch(MalformedURLException e) {
+            e.printStackTrace();
+        }catch(IOException e) {
+            e.printStackTrace();
+        }
+        
+        try{
+            latestVersion = IOUtils.readLines(in).get(0);
+        }catch(IOException e) {
+            e.printStackTrace();
+        }
+        finally{
+            IOUtils.closeQuietly(in);
+        }
+        System.out.println(RefStrings.NAME+":Latest mod version = "+latestVersion);
+        System.out.println(RefStrings.NAME+":Current mod version = "+RefStrings.VERSION);
+        isLatestVersion = RefStrings.VERSION.equals(latestVersion);
+        System.out.println(RefStrings.NAME+":Are you running latest version = "+isLatestVersion);
+    }
+    
+    public boolean isLatestVersion() {
+    	return isLatestVersion;
+    }
+    
+    public String getLatestVersion() {
+    	return latestVersion;
     }
 }
